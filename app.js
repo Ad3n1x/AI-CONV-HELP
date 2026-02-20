@@ -386,6 +386,7 @@ class AIConversationHelper {
         if (video.active) { if (video.bodyLanguage.posture === 'open') rapportScore += 15; if (video.bodyLanguage.eyeContact === 'good') rapportScore += 15; }
         if (audio.active) { if (audio.confidence > 70) rapportScore += 10; if (audio.sentiment === 'positive') rapportScore += 10; }
         if (ocr.active) { if (ocr.sentiment.positive > ocr.sentiment.negative) rapportScore += 15; }
+        
         this.state.analysisData.combined.rapportScore = Math.min(100, rapportScore);
         this.state.analysisData.combined.suggestedActions = this.generateSuggestedActions();
     }
