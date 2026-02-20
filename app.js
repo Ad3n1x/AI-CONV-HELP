@@ -105,6 +105,7 @@ class AIConversationHelper {
             placeholderState: document.getElementById('placeholderState'),
             toggleVideoBtn: document.getElementById('toggleVideoBtn'),
             toggleAudioBtn: document.getElementById('toggleAudioBtn'),
+            flipCameraBtn: document.getElementById('flipCameraBtn'),
             startAnalysisBtn: document.getElementById('startAnalysisBtn'),
             settingsBtn: document.getElementById('settingsBtn'),
             settingsModal: document.getElementById('settingsModal'),
@@ -150,6 +151,7 @@ class AIConversationHelper {
         }
         if (this.elements.toggleVideoBtn) this.elements.toggleVideoBtn.addEventListener('click', () => this.toggleVideo());
         if (this.elements.toggleAudioBtn) this.elements.toggleAudioBtn.addEventListener('click', () => this.toggleAudio());
+        if (this.elements.flipCameraBtn) this.elements.flipCameraBtn.addEventListener('click', () => this.flipCamera());
         if (this.elements.settingsBtn) this.elements.settingsBtn.addEventListener('click', () => this.openSettings());
         if (this.elements.closeSettingsBtn) this.elements.closeSettingsBtn.addEventListener('click', () => this.closeSettings());
         if (this.elements.cancelSettingsBtn) this.elements.cancelSettingsBtn.addEventListener('click', () => this.closeSettings());
@@ -783,6 +785,34 @@ class AIConversationHelper {
         if (this.elements.videoFeed && this.elements.videoFeed.srcObject) {
             const audioTrack = this.elements.videoFeed.srcObject.getAudioTracks()[0];
             if (audioTrack) { audioTrack.enabled = !audioTrack.enabled; this.state.isAudioActive = audioTrack.enabled; }
+        }
+    }
+
+    async flipCamera() {
+        if (!this.elements.videoFeed || !this.elements.videoFeed.srcObject) {
+            alert('Please start the camera first');
+            return;
+        }
+        
+        // Toggle between front and back camera
+        this.state.currentFacingMode = this.state.currentFacingMode === 'user' ? 'environment' : 'user';
+        
+        // Stop current stream
+        const tracks = this.elements.videoFeed.srcObject.getTracks();
+        tracks.forEach(track => track.stop());
+        
+        try {
+            // Get new stream with flipped camera
+            const stream = await navigator.mediaDevices.getUserMedia({
+                video: { facingMode: this.state.currentFacingMode, width: 1280, height: 720 },
+                audio: true
+            });
+            
+            this.elements.videoFeed.srcObject = stream;
+            console.log('Camera flipped to: ' + this.state.currentFacingMode);
+        } catch (error) {
+            console.error('Failed to flip camera:', error);
+            alert('Could not switch camera. Please try again.');
         }
     }
 
