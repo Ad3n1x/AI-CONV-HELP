@@ -11,7 +11,8 @@ class AIConversationHelper {
             isAudioActive: false,
             feedbackEnabled: true,
             sessionStartTime: null,
-            fullTimeAnalysis: true,
+            fullTimeAnalysis: false,
+            currentFacingMode: 'user',
             analysisData: {
                 emotions: { happy: 45, neutral: 65, engaged: 52, current: 'neutral' },
                 bodyLanguage: { posture: 'open', eyeContact: 'good', gestures: 'moderate' },
@@ -43,8 +44,8 @@ class AIConversationHelper {
         this.bindEvents();
         this.loadSettings();
         this.initializeAnalysis();
-        this.startFullTimeAnalysis();
-        console.log('AI Conversation Helper initialized - Full-time analysis ON');
+        // Don't auto-start - wait for user to click start button
+        console.log('AI Conversation Helper initialized - Click Start to begin analysis');
     }
 
     getConversationOpeners() {
@@ -419,8 +420,10 @@ class AIConversationHelper {
         if (this.elements.positiveBar) this.elements.positiveBar.style.width = sentiment === 'positive' ? '70%' : '30%';
         if (this.elements.neutralBar) this.elements.neutralBar.style.width = sentiment === 'neutral' ? '70%' : '30%';
         
-        // Generate conversation suggestions based on chat content
-        this.generateConversationSuggestions(text, sentiment, lines);
+        // Extract topics and generate AI-powered suggestions
+        const topics = this.extractTopics(text);
+        const aiSuggestions = this.generateAISuggestions(text, sentiment, topics, lines.length);
+        this.displayAISuggestions(aiSuggestions);
     }
     
     generateConversationSuggestions(text, sentiment, lines) {
@@ -513,6 +516,33 @@ class AIConversationHelper {
         }
     }
 
+    extractTopics(text) {
+        const topics = [];
+        const textLower = text.toLowerCase();
+        
+        const topicKeywords = {
+            work: ['work', 'job', 'career', 'office', 'boss', 'colleague', 'meeting', 'project', 'deadline', 'professional'],
+            relationships: ['relationship', 'dating', 'partner', 'love', 'marriage', 'friend', 'family', 'parent', 'kids'],
+            hobbies: ['hobby', 'gaming', 'music', 'sport', 'reading', 'cooking', 'art', 'travel', 'photography'],
+            travel: ['travel', 'trip', 'vacation', 'destination', 'hotel', 'flight', 'abroad', 'country', 'city'],
+            food: ['food', 'restaurant', 'cook', 'eat', 'dinner', 'lunch', 'breakfast', 'recipe', 'cuisine'],
+            technology: ['tech', 'computer', 'phone', 'app', 'software', 'ai', 'internet', 'social media'],
+            entertainment: ['movie', 'music', 'game', 'show', 'book', 'series', 'netflix', 'youtube', 'sport'],
+            health: ['health', 'exercise', 'gym', 'sleep', 'stress', 'mental', 'wellness', 'diet']
+        };
+        
+        for (const [topic, keywords] of Object.entries(topicKeywords)) {
+            for (const keyword of keywords) {
+                if (textLower.includes(keyword)) {
+                    topics.push(topic);
+                    break;
+                }
+            }
+        }
+        
+        return [...new Set(topics)];
+    }
+
     analyzeSentiment(text) {
         const positiveWords = ['happy', 'great', 'good', 'love', 'excellent', 'thanks', 'yes', 'awesome', 'nice'];
         const negativeWords = ['sad', 'bad', 'hate', 'terrible', 'no', 'angry', 'problem', 'issue'];
@@ -539,6 +569,69 @@ class AIConversationHelper {
         if (this.elements.ocrPreview) this.elements.ocrPreview.style.display = 'none';
         if (this.elements.ocrUploadArea) this.elements.ocrUploadArea.style.display = 'block';
         if (this.elements.ocrFileInput) this.elements.ocrFileInput.value = '';
+    }
+    
+    // Enhanced AI Chat Suggestions System
+    generateAISuggestions(text, sentiment, topics, lineCount) {
+        const suggestions = [];
+        const textLower = text.toLowerCase();
+        
+        // Contextual AI Suggestions based on topics
+        const topicSuggestions = {
+            work: ["Share your career journey and ask about theirs", "Discuss industry trends", "Ask about work-life balance"],
+            relationships: ["Show empathy and ask open-ended questions", "Share a personal story to build trust", "Be genuine and show interest"],
+            hobbies: ["Find common interests to bond over", "Ask about their favorite activities", "Share your own experiences"],
+            travel: ["Share travel stories", "Ask about dream destinations", "Discuss favorite cuisines from cultures"],
+            food: ["Discuss favorite restaurants", "Share cooking experiences", "Suggest meeting at a restaurant"],
+            technology: ["Discuss latest tech trends", "Ask about favorite apps", "Share helpful tech tips"],
+            entertainment: ["Discuss recent movies or shows", "Ask about favorite genres", "Share recommendations"],
+            health: ["Be supportive about wellness", "Ask about exercise routines", "Discuss healthy habits"]
+        };
+        
+        // Add topic-based suggestions
+        topics.forEach(topic => {
+            if (topicSuggestions[topic]) {
+                const randomSuggestion = topicSuggestions[topic][Math.floor(Math.random() * topicSuggestions[topic].length)];
+                suggestions.push({ type: 'ai', category: topic, text: randomSuggestion, icon: this.getTopicIcon(topic) });
+            }
+        });
+        
+        // Sentiment-based suggestions
+        if (sentiment === 'positive') {
+            suggestions.push({ type: 'ai', category: 'sentiment', text: 'Positive vibe! Match their energy.', icon: '😊' });
+        } else if (sentiment === 'negative') {
+            suggestions.push({ type: 'ai', category: 'sentiment', text: 'They seem down. Offer support and be empathetic.', icon: '💙' });
+        }
+        
+        // Flow suggestions
+        if (lineCount > 15) {
+            suggestions.push({ type: 'ai', category: 'flow', text: 'Great engagement! Dive deeper into topics.', icon: '💬' });
+        } else if (lineCount < 5) {
+            suggestions.push({ type: 'ai', category: 'flow', text: 'Ask an open-ended question to keep it going.', icon: '❓' });
+        }
+        
+        // Pattern suggestions
+        if (!text.includes('?')) {
+            suggestions.push({ type: 'ai', category: 'tip', text: 'Try asking something to encourage response.', icon: '🤔' });
+        }
+        
+        return suggestions.slice(0, 6);
+    }
+    
+    getTopicIcon(topic) {
+        const icons = { work: '💼', relationships: '💕', hobbies: '🎨', travel: '✈️', food: '🍽️', technology: '📱', entertainment: '🎬', health: '💪' };
+        return icons[topic] || '💡';
+    }
+    
+    displayAISuggestions(suggestions) {
+        if (!this.elements.chatInsights) return;
+        this.elements.chatInsights.innerHTML = '';
+        suggestions.forEach(s => {
+            const card = document.createElement('div');
+            card.className = 'insight-card ' + s.type;
+            card.innerHTML = '<div class="insight-header"><span class="insight-icon">' + (s.icon || '💡') + '</span><span class="insight-label">' + (s.category || 'AI') + '</span></div><p>' + s.text + '</p>';
+            this.elements.chatInsights.appendChild(card);
+        });
     }
 
     copyExtractedText() {
