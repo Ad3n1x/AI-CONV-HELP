@@ -1,720 +1,100 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Conversation Helper</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <meta name="description" content="Understand confusing conversations and draft thoughtful replies. Private, practical conversation coaching.">
+  <title>AI Conversation Helper — AD3N1X</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="app-container">
-        <!-- Header -->
-        <header class="app-header">
-            <div class="logo">
-                <div class="logo-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                        <circle cx="12" cy="10" r="1"></circle>
-                        <circle cx="8" cy="10" r="1"></circle>
-                        <circle cx="16" cy="10" r="1"></circle>
-                    </svg>
-                </div>
-                <span class="logo-text">AI Conversation Helper</span>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="AI Conversation Helper home">
+        <span class="brand-mark">a<span>·</span></span>
+        <span><strong>conversation<span class="brand-accent">/</span>helper</strong><small>by AD3N1X</small></span>
+      </a>
+      <div class="topbar-actions">
+        <span class="privacy-pill"><span class="privacy-dot"></span> Your text stays in this browser</span>
+        <button class="btn btn-quiet btn-small" id="clearBtn" type="button">New analysis</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="eyebrow"><span class="eyebrow-line"></span> YOUR PERSONAL CONVERSATION COACH</div>
+        <h1>Less overthinking.<br><span>More thoughtful replies.</span></h1>
+        <p class="hero-copy">Bring the conversation that has you stuck. Get a grounded read of the words, consider a few possible meanings, and find a reply that still sounds like you.</p>
+        <div class="hero-points"><span>01 / Understand the context</span><span>02 / Explore interpretations</span><span>03 / Reply with intention</span></div>
+      </section>
+
+      <section class="workspace" aria-label="Conversation analysis workspace">
+        <div class="input-column">
+          <div class="section-heading"><div><span class="step-label">STEP 01</span><h2>Bring the conversation</h2></div><span class="optional-label">Private by design</span></div>
+          <div class="input-card">
+            <div class="input-tabs" role="tablist" aria-label="Input method">
+              <button class="tab active" id="textTab" role="tab" aria-selected="true" type="button">Paste text</button>
+              <button class="tab" id="imageTab" role="tab" aria-selected="false" type="button">Upload screenshot</button>
             </div>
-            <div class="header-controls">
-                <button class="icon-btn" id="settingsBtn" title="Settings">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="3"></circle>
-                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                    </svg>
-                </button>
+            <div id="textPane" class="input-pane">
+              <label class="field-label" for="conversationText">Conversation or the message you're unsure about</label>
+              <textarea id="conversationText" rows="8" placeholder="Paste the relevant messages here…&#10;&#10;You: Hey, are we still on for tomorrow?&#10;Them: I'll let you know."></textarea>
+              <div class="textarea-meta"><span id="charCount">0 characters</span><span>Names can be removed first</span></div>
             </div>
-        </header>
-
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Left Panel: Analysis Dashboard -->
-            <aside class="analysis-panel">
-                <div class="panel-section">
-                    <h3 class="section-title">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <path d="M12 16v-4"></path>
-                            <path d="M12 8h.01"></path>
-                        </svg>
-                        Real-Time Analysis
-                    </h3>
-                    <div class="analysis-cards">
-                        <!-- Emotion Analysis Card -->
-                        <div class="analysis-card" id="emotionCard">
-                            <div class="card-header">
-                                <span class="card-title">Emotional State</span>
-                                <span class="confidence-badge">87%</span>
-                            </div>
-                            <div class="emotion-display">
-                                <div class="emotion-icon neutral">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="10"></circle>
-                                        <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
-                                        <line x1="9" y1="9" x2="9.01" y2="9"></line>
-                                        <line x1="15" y1="9" x2="15.01" y2="9"></line>
-                                    </svg>
-                                </div>
-                                <div class="emotion-label">Neutral</div>
-                            </div>
-                            <div class="emotion-bars">
-                                <div class="emotion-bar">
-                                    <span class="emotion-name">Happy</span>
-                                    <div class="bar-track">
-                                        <div class="bar-fill" style="width: 45%"></div>
-                                    </div>
-                                    <span class="emotion-value">45%</span>
-                                </div>
-                                <div class="emotion-bar">
-                                    <span class="emotion-name">Neutral</span>
-                                    <div class="bar-track">
-                                        <div class="bar-fill active" style="width: 65%"></div>
-                                    </div>
-                                    <span class="emotion-value">65%</span>
-                                </div>
-                                <div class="emotion-bar">
-                                    <span class="emotion-name">Engaged</span>
-                                    <div class="bar-track">
-                                        <div class="bar-fill" style="width: 52%"></div>
-                                    </div>
-                                    <span class="emotion-value">52%</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Body Language Card -->
-                        <div class="analysis-card" id="bodyLanguageCard">
-                            <div class="card-header">
-                                <span class="card-title">Body Language</span>
-                                <span class="confidence-badge">82%</span>
-                            </div>
-                            <div class="body-language-display">
-                                <div class="posture-indicator">
-                                    <div class="posture-icon open">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                            <circle cx="12" cy="7" r="4"></circle>
-                                        </svg>
-                                    </div>
-                                    <span class="posture-label">Open</span>
-                                </div>
-                                <div class="gesture-list">
-                                    <div class="gesture-item">
-                                        <span class="gesture-name">Eye Contact</span>
-                                        <span class="gesture-value positive">Good</span>
-                                    </div>
-                                    <div class="gesture-item">
-                                        <span class="gesture-name">Posture</span>
-                                        <span class="gesture-value positive">Leaning In</span>
-                                    </div>
-                                    <div class="gesture-item">
-                                        <span class="gesture-name">Hand Gestures</span>
-                                        <span class="gesture-value neutral">Moderate</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Vocal Analysis Card -->
-                        <div class="analysis-card" id="vocalCard">
-                            <div class="card-header">
-                                <span class="card-title">Vocal Analysis</span>
-                                <span class="confidence-badge">79%</span>
-                            </div>
-                            <div class="vocal-display">
-                                <div class="vocal-metrics">
-                                    <div class="vocal-metric">
-                                        <span class="metric-label">Pace</span>
-                                        <span class="metric-value">Normal</span>
-                                        <div class="metric-bar">
-                                            <div class="metric-fill" style="width: 60%"></div>
-                                        </div>
-                                    </div>
-                                    <div class="vocal-metric">
-                                        <span class="metric-label">Tone</span>
-                                        <span class="metric-value">Warm</span>
-                                        <div class="metric-bar">
-                                            <div class="metric-fill" style="width: 72%"></div>
-                                        </div>
-                                    </div>
-                                    <div class="vocal-metric">
-                                        <span class="metric-label">Confidence</span>
-                                        <span class="metric-value">High</span>
-                                        <div class="metric-bar">
-                                            <div class="metric-fill" style="width: 85%"></div>
-                                        </div>
-                                    </div>
-                                    <div class="vocal-metric">
-                                        <span class="metric-label">Clarity</span>
-                                        <span class="metric-value">Clear</span>
-                                        <div class="metric-bar">
-                                            <div class="metric-fill" style="width: 90%"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Conversation Dynamics -->
-                <div class="panel-section">
-                    <h3 class="section-title">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
-                        </svg>
-                        Conversation Dynamics
-                    </h3>
-                    <div class="dynamics-card">
-                        <div class="dynamics-timeline">
-                            <div class="timeline-item speaking">
-                                <div class="timeline-marker"></div>
-                                <div class="timeline-content">
-                                    <span class="timeline-label">You Speaking</span>
-                                    <span class="timeline-duration">45s</span>
-                                </div>
-                                <div class="timeline-bar">
-                                    <div class="bar speaking" style="width: 45%"></div>
-                                </div>
-                            </div>
-                            <div class="timeline-item listening">
-                                <div class="timeline-marker"></div>
-                                <div class="timeline-content">
-                                    <span class="timeline-label">Listening</span>
-                                    <span class="timeline-duration">30s</span>
-                                </div>
-                                <div class="timeline-bar">
-                                    <div class="bar listening" style="width: 30%"></div>
-                                </div>
-                            </div>
-                            <div class="timeline-item responding">
-                                <div class="timeline-marker"></div>
-                                <div class="timeline-content">
-                                    <span class="timeline-label">Responding</span>
-                                    <span class="timeline-duration">25s</span>
-                                </div>
-                                <div class="timeline-bar">
-                                    <div class="bar responding" style="width: 25%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="turn-taking-metrics">
-                            <div class="metric">
-                                <span class="metric-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                                    </svg>
-                                </span>
-                                <span class="metric-text">Turn-taking: <strong>Balanced</strong></span>
-                            </div>
-                            <div class="metric">
-                                <span class="metric-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="10"></circle>
-                                        <polyline points="12 6 12 12 16 14"></polyline>
-                                    </svg>
-                                </span>
-                                <span class="metric-text">Response Time: <strong>2.3s</strong></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </aside>
-
-            <!-- Center Panel: Main Interface -->
-            <section class="conversation-panel">
-                <!-- Video Preview Area -->
-                <div class="video-area">
-                    <div class="video-container" id="videoContainer">
-                        <video id="videoFeed" autoplay playsinline muted></video>
-                        <canvas id="analysisCanvas"></canvas>
-                        <div class="video-overlay">
-                            <div class="analysis-status">
-                                <span class="status-dot active"></span>
-                                <span>AI Analysis Active</span>
-                            </div>
-                        </div>
-                        <div class="video-controls">
-                            <button class="control-btn" id="toggleVideoBtn" title="Toggle Video">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M23 7l-7 5 7 5V7z"></path>
-                                    <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
-                                </svg>
-                            </button>
-                            <button class="control-btn" id="toggleAudioBtn" title="Toggle Audio">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
-                                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-                                    <line x1="12" y1="19" x2="12" y2="23"></line>
-                                    <line x1="8" y1="23" x2="16" y2="23"></line>
-                                </svg>
-                            </button>
-                            <button class="control-btn" id="flipCameraBtn" title="Flip Camera">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M16.5 9.4l-1.45-1.32C13.5 6.52 11.64 5.5 9.5 5.5c-4.15 0-7.5 3.36-7.5 7.5c0 2.14 1.02 3.94 2.55 5.15L3 20.5l2.25-1.05C6.53 18.44 7.9 18 9.5 18c4.15 0 7.5-3.36 7.5-7.5c0-2.14-1.02-3.94-2.55-5.15L16.5 3.35"></path>
-                                    <path d="M7.5 14.6l1.45 1.32C10.5 17.48 12.36 18.5 14.5 18.5c4.15 0 7.5-3.36 7.5-7.5c0-2.14-1.02-3.94-2.55-5.15L21 3.5l-2.25 1.05C17.47 5.56 16.1 6 14.5 6c-4.15 0-7.5 3.36-7.5 7.5c0 2.14 1.02 3.94 2.55 5.15"></path>
-                                </svg>
-                            </button>
-                            <button class="control-btn" id="startAnalysisBtn" title="Start Analysis">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="placeholder-state" id="placeholderState">
-                        <div class="placeholder-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M23 7l-7 5 7 5V7z"></path>
-                                <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
-                            </svg>
-                        </div>
-                        <p>Click the play button below to start AI analysis</p>
-                        <button class="main-start-btn" id="mainStartBtn">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                            </svg>
-                            <span>Start Analysis</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Real-Time Feedback -->
-                <div class="feedback-section" id="feedbackSection">
-                    <div class="feedback-header">
-                        <h3>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-                            </svg>
-                            AI Suggestions
-                        </h3>
-                        <button class="icon-btn small" id="toggleFeedbackBtn" title="Toggle Feedback">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
-                                <line x1="12" y1="2" x2="12" y2="12"></line>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="feedback-list" id="feedbackList">
-                        <div class="feedback-item suggestion">
-                            <div class="feedback-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                                </svg>
-                            </div>
-                            <div class="feedback-content">
-                                <p>The conversation partner seems engaged. Consider asking an open-ended question to deepen the discussion.</p>
-                                <span class="feedback-timing">2 min ago</span>
-                            </div>
-                        </div>
-                        <div class="feedback-item tip">
-                            <div class="feedback-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M9.18 2.18a3.5 3.5 0 0 1 4.64 0L15 3h3a3.5 3.5 0 0 1 0 7H8.53a3.5 3.5 0 0 1-.76-6.82L9.18 2.18zM8 16h.01"></path>
-                                </svg>
-                            </div>
-                            <div class="feedback-content">
-                                <p>Good eye contact maintained! This helps build trust and rapport.</p>
-                                <span class="feedback-timing">3 min ago</span>
-                            </div>
-                        </div>
-                        <div class="feedback-item warning">
-                            <div class="feedback-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-                                    <line x1="12" y1="9" x2="12" y2="13"></line>
-                                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                                </svg>
-                            </div>
-                            <div class="feedback-content">
-                                <p>Conversation pace seems rushed. Consider pausing more to allow for responses.</p>
-                                <span class="feedback-timing">5 min ago</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- OCR Screenshot Analysis -->
-                <div class="ocr-section" id="ocrSection">
-                    <h3>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                            <polyline points="21 15 16 10 5 21"></polyline>
-                        </svg>
-                        Chat Screenshot Analysis
-                    </h3>
-                    <div class="ocr-upload-area" id="ocrUploadArea">
-                        <div class="upload-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                <polyline points="17 8 12 3 7 8"></polyline>
-                                <line x1="12" y1="3" x2="12" y2="15"></line>
-                            </svg>
-                        </div>
-                        <p>Drag & drop a chat screenshot here</p>
-                        <span class="upload-hint">or click to browse</span>
-                        <input type="file" id="ocrFileInput" accept="image/*,.pdf,.doc,.docx,.txt,.mp4,.webm,.mov,.avi" multiple hidden>
-                    </div>
-                    
-                    <div class="ocr-preview" id="ocrPreview" style="display: none;">
-                        <div class="preview-image-container">
-                            <img id="previewImage" alt="Chat screenshot preview">
-                            <button class="remove-image-btn" id="removeImageBtn" title="Remove image">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="ocr-progress" id="ocrProgress" style="display: none;">
-                            <div class="progress-bar">
-                                <div class="progress-fill" id="progressFill"></div>
-                            </div>
-                            <span class="progress-text" id="progressText">Analyzing...</span>
-                        </div>
-                        <div class="ocr-results" id="ocrResults" style="display: none;">
-                            <div class="results-header">
-                                <h4>Extracted Text</h4>
-                                <button class="copy-btn" id="copyTextBtn" title="Copy text">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="extracted-text" id="extractedText"></div>
-                            
-                            <div class="chat-analysis" id="chatAnalysis">
-                                <h4>Chat Analysis</h4>
-                                <div class="analysis-metrics">
-                                    <div class="metric-card">
-                                        <span class="metric-icon">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                                            </svg>
-                                        </span>
-                                        <span class="metric-label">Messages</span>
-                                        <span class="metric-value" id="messageCount">0</span>
-                                    </div>
-                                    <div class="metric-card">
-                                        <span class="metric-icon">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <circle cx="12" cy="12" r="10"></circle>
-                                                <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
-                                                <line x1="9" y1="9" x2="9.01" y2="9"></line>
-                                                <line x1="15" y1="9" x2="15.01" y2="9"></line>
-                                            </svg>
-                                        </span>
-                                        <span class="metric-label">Tone</span>
-                                        <span class="metric-value" id="chatTone">-</span>
-                                    </div>
-                                    <div class="metric-card">
-                                        <span class="metric-icon">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <circle cx="12" cy="12" r="10"></circle>
-                                                <polyline points="12 6 12 12 16 14"></polyline>
-                                            </svg>
-                                        </span>
-                                        <span class="metric-label">Response Time</span>
-                                        <span class="metric-value" id="avgResponseTime">-</span>
-                                    </div>
-                                    <div class="metric-card">
-                                        <span class="metric-icon">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                                <circle cx="12" cy="7" r="4"></circle>
-                                            </svg>
-                                        </span>
-                                        <span class="metric-label">Participants</span>
-                                        <span class="metric-value" id="participantCount">-</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="sentiment-analysis">
-                                    <h5>Sentiment Breakdown</h5>
-                                    <div class="sentiment-bars">
-                                        <div class="sentiment-bar">
-                                            <span class="sentiment-label positive">Positive</span>
-                                            <div class="bar-track">
-                                                <div class="bar-fill positive" id="positiveBar" style="width: 0%"></div>
-                                            </div>
-                                            <span class="sentiment-value" id="positiveValue">0%</span>
-                                        </div>
-                                        <div class="sentiment-bar">
-                                            <span class="sentiment-label neutral">Neutral</span>
-                                            <div class="bar-track">
-                                                <div class="bar-fill neutral" id="neutralBar" style="width: 0%"></div>
-                                            </div>
-                                            <span class="sentiment-value" id="neutralValue">0%</span>
-                                        </div>
-                                        <div class="sentiment-bar">
-                                            <span class="sentiment-label negative">Negative</span>
-                                            <div class="bar-track">
-                                                <div class="bar-fill negative" id="negativeBar" style="width: 0%"></div>
-                                            </div>
-                                            <span class="sentiment-value" id="negativeValue">0%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="insights-section">
-                                    <h5>AI Insights</h5>
-                                    <div class="insights-list" id="chatInsights">
-                                        <!-- Dynamic insights will be added here -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Conversation Notes -->
-                <div class="notes-section">
-                    <h3>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <line x1="16" y1="13" x2="8" y2="13"></line>
-                            <line x1="16" y1="17" x2="8" y2="17"></line>
-                            <polyline points="10 9 9 9 8 9"></polyline>
-                        </svg>
-                        Session Notes
-                    </h3>
-                    <textarea id="sessionNotes" placeholder="Add notes about this conversation..."></textarea>
-
-            <!-- Right Panel: Insights & Recommendations -->
-            <aside class="insights-panel">
-                <div class="panel-section">
-                    <h3 class="section-title">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                        </svg>
-                        Insights
-                    </h3>
-                    <div class="insights-list">
-                        <div class="insight-card positive">
-                            <div class="insight-header">
-                                <span class="insight-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <polyline points="20 6 9 17 4 12"></polyline>
-                                    </svg>
-                                </span>
-                                <span class="insight-label">Strength</span>
-                            </div>
-                            <p>Excellent rapport building detected. The conversation partner responds positively to your engaged listening style.</p>
-                        </div>
-                        <div class="insight-card neutral">
-                            <div class="insight-header">
-                                <span class="insight-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="10"></circle>
-                                        <line x1="12" y1="16" x2="12" y2="12"></line>
-                                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                                    </svg>
-                                </span>
-                                <span class="insight-label">Observation</span>
-                            </div>
-                            <p>Topic discussion has been balanced. Consider exploring new topics to maintain engagement.</p>
-                        </div>
-                        <div class="insight-card tip">
-                            <div class="insight-header">
-                                <span class="insight-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="10"></circle>
-                                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                                    </svg>
-                                </span>
-                                <span class="insight-label">Tip</span>
-                            </div>
-                            <p>Try mirroring the conversation partner's body language subtly to increase亲和力 (rapport).</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Psychological Profile -->
-                <div class="panel-section">
-                    <h3 class="section-title">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                        Partner Profile
-                    </h3>
-                    <div class="profile-card">
-                        <div class="profile-avatar">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                        </div>
-                        <div class="profile-info">
-                            <h4>Conversation Partner</h4>
-                            <span class="profile-status">Analyzing...</span>
-                        </div>
-                        <div class="profile-traits">
-                            <div class="trait">
-                                <span class="trait-label">Communication Style</span>
-                                <span class="trait-value">Expressive</span>
-                            </div>
-                            <div class="trait">
-                                <span class="trait-label">Dominance</span>
-                                <span class="trait-value">Medium</span>
-                            </div>
-                            <div class="trait">
-                                <span class="trait-label">Emotional Tone</span>
-                                <span class="trait-value">Positive</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Recommendations -->
-                <div class="panel-section">
-                    <h3 class="section-title">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
-                        </svg>
-                        Recommended Actions
-                    </h3>
-                    <div class="recommendations-list">
-                        <button class="recommendation-btn active">
-                            <span class="rec-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                                </svg>
-                            </span>
-                            <span class="rec-text">Ask open-ended question</span>
-                            <span class="rec-impact high">High Impact</span>
-                        </button>
-                        <button class="recommendation-btn">
-                            <span class="rec-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                                </svg>
-                            </span>
-                            <span class="rec-text">Acknowledge their point</span>
-                            <span class="rec-impact medium">Medium Impact</span>
-                        </button>
-                        <button class="recommendation-btn">
-                            <span class="rec-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                                </svg>
-                            </span>
-                            <span class="rec-text">Maintain current approach</span>
-                            <span class="rec-impact low">Low Risk</span>
-                        </button>
-                    </div>
-                </div>
-            </aside>
-        </main>
-
-        <!-- Settings Modal -->
-        <div class="modal-overlay" id="settingsModal">
-            <div class="modal">
-                <div class="modal-header">
-                    <h2>Settings</h2>
-                    <button class="icon-btn" id="closeSettingsBtn">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="18" y1="6" x2="6" y2="18"></line>
-                            <line x1="6" y1="6" x2="18" y2="18"></line>
-                        </svg>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="settings-group">
-                        <h3>Analysis Settings</h3>
-                        <div class="setting-item">
-                            <div class="setting-info">
-                                <span class="setting-label">Emotion Analysis</span>
-                                <span class="setting-description">Detect and analyze facial expressions</span>
-                            </div>
-                            <label class="toggle">
-                                <input type="checkbox" checked>
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                        <div class="setting-item">
-                            <div class="setting-info">
-                                <span class="setting-label">Body Language Analysis</span>
-                                <span class="setting-description">Analyze posture and gestures</span>
-                            </div>
-                            <label class="toggle">
-                                <input type="checkbox" checked>
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                        <div class="setting-item">
-                            <div class="setting-info">
-                                <span class="setting-label">Vocal Analysis</span>
-                                <span class="setting-description">Analyze tone and speech patterns</span>
-                            </div>
-                            <label class="toggle">
-                                <input type="checkbox" checked>
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="settings-group">
-                        <h3>Feedback Settings</h3>
-                        <div class="setting-item">
-                            <div class="setting-info">
-                                <span class="setting-label">Feedback Frequency</span>
-                                <span class="setting-description">How often to show suggestions</span>
-                            </div>
-                            <select class="select-input">
-                                <option value="low">Low</option>
-                                <option value="medium" selected>Medium</option>
-                                <option value="high">High</option>
-                            </select>
-                        </div>
-                        <div class="setting-item">
-                            <div class="setting-info">
-                                <span class="setting-label">Feedback Sound</span>
-                                <span class="setting-description">Play sound for new suggestions</span>
-                            </div>
-                            <label class="toggle">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="settings-group">
-                        <h3>Privacy</h3>
-                        <div class="setting-item">
-                            <div class="setting-info">
-                                <span class="setting-label">Local Processing</span>
-                                <span class="setting-description">Process all data on device</span>
-                            </div>
-                            <label class="toggle">
-                                <input type="checkbox" checked>
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" id="cancelSettingsBtn">Cancel</button>
-                    <button class="btn btn-primary" id="saveSettingsBtn">Save Settings</button>
-                </div>
+            <div id="imagePane" class="input-pane hidden">
+              <label class="field-label" for="screenshotInput">Chat screenshot</label>
+              <label class="dropzone" id="dropzone" for="screenshotInput">
+                <span class="upload-icon">↑</span><strong>Choose an image or drop it here</strong><span>PNG, JPG or WEBP · processed in your browser</span>
+              </label>
+              <input id="screenshotInput" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+              <div id="imagePreviewWrap" class="image-preview-wrap hidden"><img id="imagePreview" alt="Selected screenshot preview"><button type="button" id="removeImageBtn" class="btn btn-quiet btn-small">Remove image</button></div>
+              <p class="helper-note" id="ocrStatus">Text extraction uses an OCR library loaded when needed. The first load may require internet access.</p>
             </div>
+            <div class="context-grid">
+              <div class="field"><label class="field-label" for="relationship">Your relationship</label><select id="relationship"><option value="friend">Friend</option><option value="dating">Someone I'm dating / interested in</option><option value="partner">Partner</option><option value="work">Work or school</option><option value="family">Family</option><option value="other">Other / not sure</option></select></div>
+              <div class="field"><label class="field-label" for="goal">What do you want to do?</label><select id="goal"><option value="continue">Keep the conversation going</option><option value="clarify">Understand what they meant</option><option value="support">Show support or empathy</option><option value="boundary">Set a respectful boundary</option><option value="apologize">Apologize or repair tension</option><option value="direct">Be clear and direct</option><option value="end">End the conversation politely</option></select></div>
+              <div class="field"><label class="field-label" for="tone">Reply style</label><select id="tone"><option value="natural">Natural and genuine</option><option value="warm">Warm and thoughtful</option><option value="playful">Light and playful</option><option value="confident">Calm and confident</option><option value="brief">Short and low-pressure</option><option value="formal">Polite and professional</option></select></div>
+              <div class="field"><label class="field-label" for="context">Anything else? <span class="muted">(optional)</span></label><input id="context" type="text" maxlength="240" placeholder="e.g. We had a disagreement yesterday"></div>
+            </div>
+            <button id="analyzeBtn" class="btn btn-primary btn-full" type="button"><span>Analyse conversation</span><span aria-hidden="true">↗</span></button>
+            <p class="microcopy">No account. No automatic sending. You choose what to use.</p>
+          </div>
+          <div class="honesty-note"><span class="note-icon">i</span><p><strong>A grounded read, not mind-reading.</strong> Text alone can't prove someone's feelings or intentions. This version uses transparent local heuristics, not a connected AI model.</p></div>
         </div>
-    </div>
 
-    <script src="app.js"></script>
+        <div class="results-column">
+          <div class="section-heading"><div><span class="step-label">STEP 02</span><h2>Make sense of it</h2></div><span class="result-state" id="resultState">WAITING FOR TEXT</span></div>
+          <div class="empty-state" id="emptyState">
+            <div class="empty-art"><span class="art-bubble bubble-one">…</span><span class="art-bubble bubble-two">↗</span><div class="art-orbit"></div><div class="art-center">a<span>·</span></div></div>
+            <h3>Your next move starts here.</h3>
+            <p>Add a conversation on the left. We'll help you separate what's actually written from what you're guessing, then build reply options around your goal.</p>
+            <div class="empty-checklist"><span><b>✓</b> Spot wording and tone clues</span><span><b>✓</b> Consider more than one interpretation</span><span><b>✓</b> Draft replies you can edit</span></div>
+          </div>
+          <div id="results" class="results hidden" aria-live="polite">
+            <article class="result-card">
+              <div class="card-kicker">THE TEXT ITSELF</div><h3 id="summaryTitle">What stands out</h3><p id="summaryText"></p>
+              <div class="signal-row" id="signalRow"></div>
+            </article>
+            <article class="result-card">
+              <div class="card-kicker">POSSIBLE READINGS</div><h3>What it could mean</h3><p class="card-subtitle">These are possibilities, not conclusions. Context matters.</p><div id="interpretations" class="interpretation-list"></div>
+            </article>
+            <article class="result-card reply-card">
+              <div class="reply-heading"><div><div class="card-kicker">STEP 03 · YOUR RESPONSE</div><h3>Choose your next move</h3></div><span class="reply-count">3 options</span></div>
+              <div id="replyOptions" class="reply-options"></div>
+              <div class="custom-reply"><label class="field-label" for="editedReply">Make it sound like you</label><textarea id="editedReply" rows="3" placeholder="Select a reply above or write your own…"></textarea><div class="reply-actions"><span id="replyStatus" class="muted">Edit freely before copying.</span><button id="copyReplyBtn" class="btn btn-primary btn-small" type="button">Copy reply ↗</button></div></div>
+            </article>
+            <p class="results-disclaimer">This is a writing aid, not a reliable way to diagnose emotions, infer attraction, or determine intent. When in doubt, respectful direct communication beats guessing.</p>
+          </div>
+        </div>
+      </section>
+      <section class="bottom-strip"><div><span class="strip-mark">a·</span><p><strong>Be understood. Understand others.</strong><br><span>Helpful words, without pretending to know what's in someone's head.</span></p></div><span class="version-label">AD3N1X · EARLY ACCESS</span></section>
+    </main>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </div>
+  <script src="app.js"></script>
 </body>
 </html>
