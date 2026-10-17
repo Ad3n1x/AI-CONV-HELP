@@ -67,3 +67,10 @@
   .topbar-actions .btn-quiet{font-size:10px;padding:7px 9px}
 }
 @media(prefers-reduced-motion:reduce){.brand,.topbar-actions .btn-quiet{transition:none}}
+
+
+/* Cuewise identity */
+.brand-mark{letter-spacing:0}
+.brand-mark svg{display:block;width:31px;height:31px;color:#fff;overflow:visible}
+.strip-mark{font-size:21px;letter-spacing:-1px}
+.strip-mark span{color:#b9afff}
