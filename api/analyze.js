@@ -1,6 +1,22 @@
 const ALLOWED_RELATIONSHIPS = new Set(["friend", "dating", "partner", "work", "family", "other"]);
 const ALLOWED_GOALS = new Set(["continue", "clarify", "support", "boundary", "apologize", "direct", "end"]);
 const ALLOWED_TONES = new Set(["natural", "warm", "playful", "confident", "brief", "formal"]);
+const requestWindows = new Map();
+const WINDOW_MS = 10 * 60 * 1000;
+const MAX_REQUESTS_PER_WINDOW = 12;
+
+function isRateLimited(req) {
+  const forwarded = req.headers["x-forwarded-for"];
+  const ip = typeof forwarded === "string" ? forwarded.split(",")[0].trim() : "unknown";
+  const now = Date.now();
+  const current = requestWindows.get(ip);
+  if (!current || now - current.start >= WINDOW_MS) {
+    requestWindows.set(ip, { start: now, count: 1 });
+    return false;
+  }
+  current.count += 1;
+  return current.count > MAX_REQUESTS_PER_WINDOW;
+}
 
 function send(res, status, payload) {
   return res.status(status).json(payload);
@@ -14,6 +30,8 @@ module.exports = async function handler(req, res) {
     res.setHeader("Allow", "POST");
     return send(res, 405, { error: "Use POST for conversation analysis." });
   }
+
+  if (isRateLimited(req)) return send(res, 429, { error: "Too many requests from this connection. Please wait a few minutes and try again." });
 
   if (!process.env.OPENAI_API_KEY) {
     return send(res, 503, { error: "AI mode is not configured yet. Add OPENAI_API_KEY in your deployment environment." });
