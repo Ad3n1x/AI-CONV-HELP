@@ -19,7 +19,7 @@
         <span><strong>conversation<span class="brand-accent">/</span>helper</strong><small>by AD3N1X</small></span>
       </a>
       <div class="topbar-actions">
-        <span class="privacy-pill"><span class="privacy-dot"></span> Your text stays in this browser</span>
+        <span class="privacy-pill"><span class="privacy-dot"></span> No account · no chat history</span>
         <button class="btn btn-quiet btn-small" id="clearBtn" type="button">New analysis</button>
       </div>
     </header>
@@ -61,9 +61,10 @@
               <div class="field"><label class="field-label" for="context">Anything else? <span class="muted">(optional)</span></label><input id="context" type="text" maxlength="240" placeholder="e.g. We had a disagreement yesterday"></div>
             </div>
             <button id="analyzeBtn" class="btn btn-primary btn-full" type="button"><span>Analyse conversation</span><span aria-hidden="true">↗</span></button>
-            <p class="microcopy">No account. No automatic sending. You choose what to use.</p>
+            <label class="ai-consent"><input id="aiConsent" type="checkbox"><span><strong>Use AI analysis when available</strong><small>If checked, the conversation excerpt and selected context are sent to the app's AI provider for processing. Unchecked means local-only analysis. Remove names or sensitive details first.</small></span></label>
+            <p class="microcopy">No account. No automatic sending. The app does not save your conversation text.</p>
           </div>
-          <div class="honesty-note"><span class="note-icon">i</span><p><strong>A grounded read, not mind-reading.</strong> Text alone can't prove someone's feelings or intentions. This version uses transparent local heuristics, not a connected AI model.</p></div>
+          <div class="honesty-note"><span class="note-icon">i</span><p><strong>A grounded read, not mind-reading.</strong> Text alone can't prove someone's feelings or intentions. AI mode is optional; when enabled, your excerpt is sent to the configured AI provider. If no API is deployed, the app uses local heuristics instead.</p></div>
         </div>
 
         <div class="results-column">
