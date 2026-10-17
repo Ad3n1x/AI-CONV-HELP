@@ -61,7 +61,7 @@
               <div class="field"><label class="field-label" for="context">Anything else? <span class="muted">(optional)</span></label><input id="context" type="text" maxlength="240" placeholder="e.g. We had a disagreement yesterday"></div>
             </div>
             <button id="analyzeBtn" class="btn btn-primary btn-full" type="button"><span>Analyse conversation</span><span aria-hidden="true">↗</span></button>
-            <label class="ai-consent"><input id="aiConsent" type="checkbox"><span><strong>Use AI analysis when available</strong><small>If checked, the conversation excerpt and selected context are sent to the app's AI provider for processing. Unchecked means local-only analysis. Remove names or sensitive details first.</small></span></label>
+            <label class="ai-consent"><input id="aiConsent" type="checkbox"><span><strong>Use AI analysis when available</strong><small>If checked, the excerpt and selected context are sent to the AI provider when a deployed endpoint is available. Without one, analysis stays local. Remove names or sensitive details first.</small></span></label>
             <p class="microcopy">No account. No automatic sending. The app does not save your conversation text.</p>
           </div>
           <div class="honesty-note"><span class="note-icon">i</span><p><strong>A grounded read, not mind-reading.</strong> Text alone can't prove someone's feelings or intentions. AI mode is optional; when enabled, your excerpt is sent to the configured AI provider. If no API is deployed, the app uses local heuristics instead.</p></div>
