@@ -1,8 +1,8 @@
 {
-  "name": "ad3n1x-ai-conversation-helper",
+  "name": "cuewise",
   "version": "1.0.0",
   "private": true,
-  "description": "Privacy-conscious conversation coaching with a server-side AI endpoint",
+  "description": "Cuewise — thoughtful conversation coaching by AD3N1X",
   "engines": {
     "node": ">=20"
   },
