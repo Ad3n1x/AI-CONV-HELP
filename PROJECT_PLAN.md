@@ -1,4 +1,4 @@
-# AI Conversation Helper — Product Plan
+# Cuewise — Product Plan
 
 ## Product definition
 A lightweight conversation-understanding and reply-coaching tool. Users paste a message exchange or upload a screenshot, choose context and a communication goal, then receive grounded wording observations, multiple plausible readings, and editable reply ideas.
