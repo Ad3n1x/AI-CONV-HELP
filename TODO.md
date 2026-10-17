@@ -1,4 +1,4 @@
-# AI Conversation Helper — Implementation Checklist
+# Cuewise — Implementation Checklist
 
 ## Delivered in this branch
 - [x] Responsive conversation-coaching interface
