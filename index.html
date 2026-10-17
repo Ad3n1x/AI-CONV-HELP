@@ -98,6 +98,28 @@
       </section>
       <section class="bottom-strip"><div><span class="strip-mark" aria-label="Cuewise">C<span>·</span></span><p><strong>Be understood. Understand others.</strong><br><span>Helpful words, without pretending to know what's in someone's head.</span></p></div><span class="version-label">AD3N1X · EARLY ACCESS</span></section>
     </main>
+    <section id="extractedTextScreen" class="extracted-screen hidden" role="dialog" aria-modal="true" aria-labelledby="extractedScreenTitle">
+      <div class="extracted-screen-shell">
+        <header class="extracted-screen-header">
+          <button id="backToScreenshotBtn" class="btn btn-quiet" type="button">← Back</button>
+          <span class="extracted-step">SCREENSHOT · TEXT EXTRACTION</span>
+          <span class="extracted-status"><span></span> OCR complete</span>
+        </header>
+        <div class="extracted-screen-content">
+          <div class="extracted-heading">
+            <span class="extracted-icon" aria-hidden="true">Aa</span>
+            <p class="step-label">YOUR EXTRACTED TEXT</p>
+            <h1 id="extractedScreenTitle">Review the text</h1>
+            <p>We’ve pulled the readable text out of your screenshot. Check it for mistakes and edit anything before continuing.</p>
+          </div>
+          <label class="field-label" for="extractedTextEditor">Extracted text <span class="muted">· editable</span></label>
+          <textarea id="extractedTextEditor" class="extracted-text-editor" spellcheck="true" aria-describedby="extractedCharCount"></textarea>
+          <div class="extracted-editor-footer"><span id="extractedCharCount" class="muted">0 characters extracted</span><button id="copyExtractedTextBtn" class="btn btn-quiet" type="button">Copy all text ↗</button></div>
+          <div class="extracted-next-step"><div><strong>Ready to make sense of it?</strong><p>Your reviewed text will be passed to Cuewise for analysis.</p></div><button id="continueWithExtractedTextBtn" class="btn btn-primary" type="button">Continue to analysis <span aria-hidden="true">→</span></button></div>
+          <p class="extracted-privacy-note"><span aria-hidden="true">⌁</span> Text recognition runs in your browser. Review the result before choosing to analyse it.</p>
+        </div>
+      </div>
+    </section>
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
   </div>
   <script src="app.js"></script>
