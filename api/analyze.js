@@ -12,7 +12,7 @@ function limited(req) {
 }
 function providers() {
   const all = {
-    gemini: { key: process.env.GEMINI_API_KEY, model: process.env.GEMINI_MODEL || "gemini-3.6-flash", kind: "gemini" },
+    gemini: { key: process.env.GEMINI_API_KEY, model: process.env.GEMINI_MODEL || "gemini-3.8-flash", kind: "gemini" },
     groq: { key: process.env.GROQ_API_KEY, model: process.env.GROQ_MODEL || "openai/gpt-oss-20b", base: "https://api.groq.com/openai/v1" },
     openrouter: { key: process.env.OPENROUTER_API_KEY, model: process.env.OPENROUTER_MODEL || "openrouter/free", base: "https://openrouter.ai/api/v1" },
     openai: { key: process.env.OPENAI_API_KEY, model: process.env.OPENAI_MODEL || "gpt-4o-mini", base: "https://api.openai.com/v1" }
@@ -70,7 +70,9 @@ module.exports = async function handler(req, res) {
 {"summaryTitle":"short heading","summaryText":"2-4 clear sentences","cues":[{"label":"short cue label","value":"brief observation"}],"interpretations":[{"title":"possible reading","detail":"cautious explanation"}],"replies":[{"title":"short style label","text":"editable reply"}]}
 Requirements: 2-4 cues; 2-3 alternative interpretations; exactly 3 distinct natural, non-manipulative replies matching the goal and tone. Do not echo unnecessary private details.`;
   let lastStatus = 502;
+  let lastProvider = list[0]?.name || "AI";
   for (const p of list) {
+    lastProvider = p.name;
     try {
       let result;
       try { result = JSON.parse(await requestProvider(p, systemPrompt, payload)); }
@@ -84,6 +86,9 @@ Requirements: 2-4 cues; 2-3 alternative interpretations; exactly 3 distinct natu
       return send(res, 200, { mode: "ai", provider: p.name, summaryTitle, summaryText, cues, interpretations, replies });
     } catch (e) { lastStatus = e.status || 502; }
   }
-  if (lastStatus === 429) return send(res, 429, { error: "Configured AI providers reached a usage limit. Try again later." });
-  return send(res, 502, { error: "No configured AI provider completed the analysis. Check server-side keys, model names, and free-tier limits." });
+  if (lastStatus === 401 || lastStatus === 403) return send(res, 502, { error: lastProvider + " rejected the API key or its permissions. Check the key in Vercel Production environment variables." });
+  if (lastStatus === 404) return send(res, 502, { error: lastProvider + " could not find the configured model. Check the model name in Vercel environment variables." });
+  if (lastStatus === 400) return send(res, 502, { error: lastProvider + " rejected the request. Check the model setting and API access for this key." });
+  if (lastStatus === 429) return send(res, 429, { error: lastProvider + " reached its usage limit. Try again later or configure another provider." });
+  return send(res, 502, { error: lastProvider + " could not complete the analysis (HTTP " + lastStatus + "). Check the API key, model access, and provider quota." });
 };
