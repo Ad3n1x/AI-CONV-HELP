@@ -262,7 +262,7 @@
   $("clearBtn").addEventListener("click", () => {
     textInput.value = ""; $("charCount").textContent = "0 characters"; clearImage(); setMode("text");
     $("results").classList.add("hidden"); $("emptyState").classList.remove("hidden"); $("resultState").textContent = "WAITING FOR TEXT";
-    $("context").value = ""; $("relationship").value = "friend"; $("goal").value = "continue"; $("tone").value = "natural";
+    $("context").value = ""; $("relationship").value = "friend"; $("goal").value = "continue"; $("tone").value = "natural"; $("aiConsent").checked = false;
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
 })();
