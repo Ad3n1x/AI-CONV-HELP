@@ -219,6 +219,42 @@
     return payload;
   }
 
+  function showExtractedText(text) {
+    $("extractedTextScreen").classList.remove("hidden");
+    $("extractedTextEditor").value = text;
+    $("extractedCharCount").textContent = text.length.toLocaleString() + " characters extracted";
+    document.body.classList.add("screen-open");
+    $("extractedTextEditor").focus();
+  }
+  function closeExtractedTextScreen() {
+    $("extractedTextScreen").classList.add("hidden");
+    document.body.classList.remove("screen-open");
+  }
+  $("backToScreenshotBtn").addEventListener("click", closeExtractedTextScreen);
+  $("extractedTextEditor").addEventListener("input", () => {
+    $("extractedCharCount").textContent = $("extractedTextEditor").value.length.toLocaleString() + " characters";
+  });
+  $("copyExtractedTextBtn").addEventListener("click", async () => {
+    const text = $("extractedTextEditor").value;
+    try {
+      await navigator.clipboard.writeText(text);
+      notify("Extracted text copied.");
+    } catch {
+      $("extractedTextEditor").focus();
+      $("extractedTextEditor").select();
+      notify("Text selected. Copy it manually.");
+    }
+  });
+  $("continueWithExtractedTextBtn").addEventListener("click", () => {
+    const text = $("extractedTextEditor").value.trim();
+    if (!text) { notify("Add or extract some text first."); return; }
+    textInput.value = text;
+    $("charCount").textContent = text.length.toLocaleString() + " characters";
+    setMode("text");
+    closeExtractedTextScreen();
+    analyzeBtn.click();
+  });
+
   analyzeBtn.addEventListener("click", async () => {
     analyzeBtn.disabled = true; analyzeBtn.querySelector("span").textContent = "Working…";
     try {
@@ -227,7 +263,8 @@
         if (!state.imageFile) { notify("Choose a screenshot first."); return; }
         text = await extractText(state.imageFile);
         if (!text) { notify("No readable text found. Try a clearer screenshot or paste the text."); return; }
-        textInput.value = text; $("charCount").textContent = text.length.toLocaleString() + " characters";
+        showExtractedText(text);
+        return;
       }
       if (!text) { notify("Paste a conversation or upload a screenshot first."); textInput.focus(); return; }
       if (text.length > 20000) { notify("Please analyse a shorter excerpt (under 20,000 characters)."); return; }
