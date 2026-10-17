@@ -28,6 +28,16 @@
   $("textTab").addEventListener("click", () => setMode("text"));
   $("imageTab").addEventListener("click", () => setMode("image"));
   textInput.addEventListener("input", () => { $("charCount").textContent = textInput.value.length.toLocaleString() + " characters"; });
+  $("sampleBtn").addEventListener("click", () => {
+    textInput.value = "You: Hey, are we still on for tomorrow?\nThem: I'll let you know.";
+    $("charCount").textContent = textInput.value.length.toLocaleString() + " characters";
+    $("relationship").value = "friend";
+    $("goal").value = "clarify";
+    $("context").value = "";
+    setMode("text");
+    textInput.focus();
+    notify("Sample conversation added. Edit it or analyse it as-is.");
+  });
   $("dropzone").addEventListener("dragover", (e) => { e.preventDefault(); $("dropzone").classList.add("dragover"); });
   $("dropzone").addEventListener("dragleave", () => $("dropzone").classList.remove("dragover"));
   $("dropzone").addEventListener("drop", (e) => {
