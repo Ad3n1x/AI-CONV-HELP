@@ -169,11 +169,11 @@
 
   function render(data) {
     $("emptyState").classList.add("hidden"); $("results").classList.remove("hidden");
-    $("resultState").textContent = "ANALYSIS READY";
+    $("resultState").textContent = data.mode === "ai" ? "AI ANALYSIS READY" : "LOCAL ANALYSIS READY";
     $("summaryTitle").textContent = data.summaryTitle; $("summaryText").textContent = data.summaryText;
     $("signalRow").innerHTML = data.cues.map(([label, value]) => '<span class="signal-chip"><strong>' + escapeHTML(label) + ':</strong> ' + escapeHTML(value) + '</span>').join("");
     $("interpretations").innerHTML = data.interpretations.map((item, i) => '<div class="interpretation"><span class="interpretation-icon">' + (i + 1) + '</span><div><strong>' + escapeHTML(item[0]) + '</strong><p>' + escapeHTML(item[1]) + '</p></div></div>').join("");
-    state.replies = makeReplies(data); state.selectedReply = 0;
+    state.replies = Array.isArray(data.replies) && data.replies.length === 3 ? data.replies : makeReplies(data); state.selectedReply = 0;
     $("replyOptions").innerHTML = state.replies.map((reply, i) => '<div class="reply-option ' + (i === 0 ? "selected" : "") + '" role="button" tabindex="0" data-index="' + i + '"><div class="reply-option-head"><strong>' + escapeHTML(reply.title) + '</strong><span>' + (i === 0 ? "RECOMMENDED START" : "OPTION " + (i + 1)) + '</span></div><p>' + escapeHTML(reply.text) + '</p></div>').join("");
     $("editedReply").value = state.replies[0].text;
     $("replyOptions").querySelectorAll(".reply-option").forEach((el) => {
@@ -190,6 +190,26 @@
     $("replyStatus").textContent = "Reply option selected. Edit it if you like.";
   }
 
+  async function requestAI(text) {
+    const response = await fetch("/api/analyze", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        text,
+        context: $("context").value.trim(),
+        relationship: $("relationship").value,
+        goal: $("goal").value,
+        tone: $("tone").value
+      })
+    });
+    let payload = {};
+    try { payload = await response.json(); } catch {}
+    if (response.status === 404 || response.status === 405) return null;
+    if (!response.ok) throw new Error(payload.error || "AI analysis failed. Please try again.");
+    if (payload.mode !== "ai" || !Array.isArray(payload.replies)) throw new Error("The AI service returned an unexpected response.");
+    return payload;
+  }
+
   analyzeBtn.addEventListener("click", async () => {
     analyzeBtn.disabled = true; analyzeBtn.querySelector("span").textContent = "Working…";
     try {
@@ -202,7 +222,23 @@
       }
       if (!text) { notify("Paste a conversation or upload a screenshot first."); textInput.focus(); return; }
       if (text.length > 20000) { notify("Please analyse a shorter excerpt (under 20,000 characters)."); return; }
-      render(analyze(text));
+      let result;
+      if ($("aiConsent").checked) {
+        try {
+          result = await requestAI(text);
+          if (!result) {
+            result = analyze(text);
+            notify("AI endpoint not found here; showing local analysis instead.");
+          }
+        } catch (error) {
+          console.error(error);
+          notify(error.message || "AI analysis failed. Please try again.");
+          return;
+        }
+      } else {
+        result = analyze(text);
+      }
+      render(result);
       $("results").scrollIntoView({ behavior: "smooth", block: "start" });
     } catch (error) {
       console.error(error); notify(error.message || "Something went wrong while reading the screenshot.");
@@ -226,7 +262,7 @@
   $("clearBtn").addEventListener("click", () => {
     textInput.value = ""; $("charCount").textContent = "0 characters"; clearImage(); setMode("text");
     $("results").classList.add("hidden"); $("emptyState").classList.remove("hidden"); $("resultState").textContent = "WAITING FOR TEXT";
-    $("context").value = ""; $("relationship").value = "friend"; $("goal").value = "continue"; $("tone").value = "natural";
+    $("context").value = ""; $("relationship").value = "friend"; $("goal").value = "continue"; $("tone").value = "natural"; $("aiConsent").checked = false;
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
 })();

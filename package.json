@@ -1,0 +1,12 @@
+{
+  "name": "ad3n1x-ai-conversation-helper",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Privacy-conscious conversation coaching with a server-side AI endpoint",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "check": "node --check api/analyze.js"
+  }
+}
