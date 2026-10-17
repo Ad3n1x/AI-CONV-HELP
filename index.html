@@ -29,7 +29,7 @@
         <div class="eyebrow"><span class="eyebrow-line"></span> YOUR PERSONAL CONVERSATION COACH</div>
         <h1>Less overthinking.<br><span>More thoughtful replies.</span></h1>
         <p class="hero-copy">Bring the conversation that has you stuck. Get a grounded read of the words, consider a few possible meanings, and find a reply that still sounds like you.</p>
-        <div class="hero-points"><span>01 / Understand the context</span><span>02 / Explore interpretations</span><span>03 / Reply with intention</span></div>
+        <div class="hero-points"><span>💬 Understand the message</span><span>🧭 Explore possible meanings</span><span>✍️ Find your words</span></div>
       </section>
 
       <section class="workspace" aria-label="Conversation analysis workspace">
@@ -43,7 +43,7 @@
             <div id="textPane" class="input-pane">
               <label class="field-label" for="conversationText">Conversation or the message you're unsure about</label>
               <textarea id="conversationText" rows="8" placeholder="Paste the relevant messages here…&#10;&#10;You: Hey, are we still on for tomorrow?&#10;Them: I'll let you know."></textarea>
-              <div class="textarea-meta"><span id="charCount">0 characters</span><span>Names can be removed first</span></div>
+              <div class="textarea-meta"><span id="charCount">0 characters</span><button id="sampleBtn" class="text-button" type="button">Try a sample ↗</button><span>Remove names if needed</span></div>
             </div>
             <div id="imagePane" class="input-pane hidden">
               <label class="field-label" for="screenshotInput">Chat screenshot</label>
@@ -60,8 +60,8 @@
               <div class="field"><label class="field-label" for="tone">Reply style</label><select id="tone"><option value="natural">Natural and genuine</option><option value="warm">Warm and thoughtful</option><option value="playful">Light and playful</option><option value="confident">Calm and confident</option><option value="brief">Short and low-pressure</option><option value="formal">Polite and professional</option></select></div>
               <div class="field"><label class="field-label" for="context">Anything else? <span class="muted">(optional)</span></label><input id="context" type="text" maxlength="240" placeholder="e.g. We had a disagreement yesterday"></div>
             </div>
+            <label class="ai-consent"><input id="aiConsent" type="checkbox"><span><strong>Use AI-powered analysis</strong><small>Get a more detailed interpretation and tailored replies. When enabled, your conversation and selected context are sent securely to the configured AI provider. Leave off to use basic on-device analysis.</small></span><span class="ai-mode-tag">OPTIONAL</span></label>
             <button id="analyzeBtn" class="btn btn-primary btn-full" type="button"><span>Analyse conversation</span><span aria-hidden="true">↗</span></button>
-            <label class="ai-consent"><input id="aiConsent" type="checkbox"><span><strong>Use AI analysis when available</strong><small>If checked, the excerpt and selected context are sent to the AI provider when a deployed endpoint is available. Without one, analysis stays local. Remove names or sensitive details first.</small></span></label>
             <p class="microcopy">No account. No automatic sending. The app does not save your conversation text.</p>
           </div>
           <div class="honesty-note"><span class="note-icon">i</span><p><strong>A grounded read, not mind-reading.</strong> Text alone can't prove someone's feelings or intentions. AI mode is optional; when enabled, your excerpt is sent to the configured AI provider. If no API is deployed, the app uses local heuristics instead.</p></div>
