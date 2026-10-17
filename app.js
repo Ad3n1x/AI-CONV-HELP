@@ -1,5 +1,4 @@
-/* AI Conversation Helper — transparent, browser-local MVP.
-   This build uses text heuristics, not a remote generative AI model. */
+/* Cuewise — conversation coaching with transparent local analysis and optional server-side AI. */
 (() => {
   const $ = (id) => document.getElementById(id);
   const state = { mode: "text", imageFile: null, extractedText: "", selectedReply: 0, replies: [] };
