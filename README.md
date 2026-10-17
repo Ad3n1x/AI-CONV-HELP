@@ -1,6 +1,6 @@
-# AI Conversation Helper
+# Cuewise — by AD3N1X
 
-A responsive conversation-understanding and reply-coaching app by AD3N1X. It helps users separate what a message literally says from assumptions, consider alternatives, and choose a thoughtful reply—not “read minds.”
+Cuewise is a responsive conversation-understanding and reply-coaching app created by AD3N1X. It helps users separate what a message literally says from assumptions, consider alternatives, and choose a thoughtful reply—not “read minds.”
 
 ## Features
 - Paste a chat excerpt or upload a PNG, JPG, or WEBP screenshot.
@@ -22,7 +22,7 @@ The server supports Gemini API, Groq, OpenRouter, and OpenAI. It tries providers
 4. Optionally add `GROQ_API_KEY` and/or `OPENROUTER_API_KEY` for fallbacks. You do not need every provider.
 5. Set a model override only if needed; see `.env.example`.
 6. Redeploy after changing environment variables.
-7. In the app, enable **Use AI analysis when available** and test with non-sensitive sample text.
+7. In the app, enable **Use AI-powered analysis** and test with non-sensitive sample text.
 
 The default Gemini model is `gemini-3.6-flash` as currently listed in Google's model documentation. If unavailable for your account, set `GEMINI_MODEL` to a currently supported text model from the official Gemini API model list.
 
