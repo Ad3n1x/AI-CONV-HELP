@@ -24,7 +24,7 @@ The server supports Gemini API, Groq, OpenRouter, and OpenAI. It tries providers
 6. Redeploy after changing environment variables.
 7. In the app, enable **Use AI-powered analysis** and test with non-sensitive sample text.
 
-The default Gemini model is `gemini-3.6-flash` as currently listed in Google's model documentation. If unavailable for your account, set `GEMINI_MODEL` to a currently supported text model from the official Gemini API model list.
+The default Gemini model is `gemini-3.8-flash`, matching the current `.env.example` and server configuration. Gemini model availability and quotas can vary by account; if it is unavailable to your project, set `GEMINI_MODEL` to another supported text model from Google's official model list.
 
 **Never put provider keys in `app.js`, `index.html`, or any client-side variable. Never share a key in chat or commit it to GitHub.** Keys belong only in server-side environment settings. A provider processes submitted conversation text under its own service terms and data policies; remove names and sensitive details when possible.
 
