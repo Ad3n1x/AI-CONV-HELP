@@ -50,6 +50,7 @@ test("returns an explicit unavailable response when no provider is configured", 
   });
   assert.equal(res.statusCode, 503);
   assert.match(res.body.error, /server-side/i);
+  assert.match(res.body.error, /OPENAI_API_KEY/);
 });
 
 test("rejects oversized conversation text before contacting a provider", async () => {
