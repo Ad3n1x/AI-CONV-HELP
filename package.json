@@ -7,6 +7,7 @@
     "node": ">=20"
   },
   "scripts": {
-    "check": "node --check api/analyze.js"
+    "check": "node --check api/analyze.js && node --check test/analyze.test.js",
+    "test": "node --test test/*.test.js"
   }
 }
