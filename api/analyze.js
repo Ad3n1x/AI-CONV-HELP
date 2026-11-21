@@ -53,7 +53,7 @@ module.exports = async function handler(req, res) {
   if (req.method !== "POST") { res.setHeader("Allow", "POST"); return send(res, 405, { error: "Use POST for conversation analysis." }); }
   if (limited(req)) return send(res, 429, { error: "Too many requests. Please wait a few minutes and try again." });
   const list = providers();
-  if (!list.length) return send(res, 503, { error: "AI mode needs a server-side GEMINI_API_KEY, GROQ_API_KEY, or OPENROUTER_API_KEY in your deployment settings." });
+  if (!list.length) return send(res, 503, { error: "AI mode needs at least one server-side provider key: GEMINI_API_KEY, GROQ_API_KEY, OPENROUTER_API_KEY, or OPENAI_API_KEY." });
 
   const body = req.body && typeof req.body === "object" ? req.body : {};
   const conversation = typeof body.text === "string" ? body.text.trim() : "";
