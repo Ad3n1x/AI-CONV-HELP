@@ -1,0 +1,26 @@
+name: Cuewise checks
+
+on:
+  push:
+    branches:
+      - main
+      - vision/cuewise-alignment-2026-11
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Check server and test syntax
+        run: npm run check
+      - name: Run API tests
+        run: npm test

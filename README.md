@@ -2,6 +2,8 @@
 
 Cuewise is a responsive conversation-understanding and reply-coaching app created by AD3N1X. It helps users separate what a message literally says from assumptions, consider alternatives, and choose a thoughtful reply—not “read minds.”
 
+The maintained product vision is in [`PRODUCT_VISION.md`](PRODUCT_VISION.md). Cuewise is a reflection and writing aid: it must not claim to establish another person's hidden feelings, honesty, personality or intent.
+
 ## Features
 - Paste a chat excerpt or upload a PNG, JPG, or WEBP screenshot.
 - Extract screenshot text in the browser with Tesseract.js.
@@ -24,7 +26,7 @@ The server supports Gemini API, Groq, OpenRouter, and OpenAI. It tries providers
 6. Redeploy after changing environment variables.
 7. In the app, enable **Use AI-powered analysis** and test with non-sensitive sample text.
 
-The default Gemini model is `gemini-3.8-flash`, matching the current `.env.example` and server configuration. Gemini model availability and quotas can vary by account; if it is unavailable to your project, set `GEMINI_MODEL` to another supported text model from Google's official model list.
+The default Gemini model is `gemini-3.8-flash`, matching the current API configuration and `.env.example` (where present). Gemini model availability and quotas can vary by account; if it is unavailable to your project, set `GEMINI_MODEL` to another supported text model from Google's official model list.
 
 **Never put provider keys in `app.js`, `index.html`, or any client-side variable. Never share a key in chat or commit it to GitHub.** Keys belong only in server-side environment settings. A provider processes submitted conversation text under its own service terms and data policies; remove names and sensitive details when possible.
 
@@ -36,6 +38,10 @@ The endpoint validates input, caps text at 20,000 characters, times out requests
 
 ## Run locally
 Open `index.html` in a modern browser or serve the folder with a static development server. Without a deployed `/api/analyze` endpoint, local analysis still works. Screenshot OCR downloads Tesseract.js from a CDN on first use.
+
+## Verification status
+
+The repository's current `check` script verifies API syntax. A configured provider, successful build or deployment does not prove a real production AI request has succeeded. Keep production request verification, platform-level abuse protection, spend limits, mobile/accessibility review and opt-in usefulness testing open until evidence is recorded. The per-instance in-memory throttle is best-effort and is not a durable distributed rate limiter.
 
 ## Project files
 - `index.html` — interface and consent notice
